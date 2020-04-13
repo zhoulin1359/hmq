@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"time"
@@ -21,7 +22,13 @@ var messageSubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Me
 }
 
 
+
+
 func main() {
+
+	sub := ""
+	flag.StringVar(&sub,"sub","1","sub")
+	flag.Parse()
 	taskId := 1
 	//设置连接参数
 	clinetOptions := mqtt.NewClientOptions().AddBroker("tcp://127.0.0.1:1883").SetUsername(user).SetPassword(password)
@@ -38,7 +45,7 @@ func main() {
 		return
 	}
 
-	token := client.Subscribe("go-test-topic", 1, messageSubHandler)
+	token := client.Subscribe("$share/1/"+sub, 1, messageSubHandler)
 	token.WaitTimeout(10 * time.Second)
 	fmt.Printf("[Sub] end Subscribe msg to mqtt broker, taskId: %d, token : %s \n", taskId, token)
 	token.Wait()

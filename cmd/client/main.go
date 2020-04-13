@@ -10,11 +10,6 @@ import (
 
 
 
-//创建全局mqtt publish消息处理 handler
-var messagePubHandler mqtt.MessageHandler = func(client mqtt.Client, msg mqtt.Message) {
-	fmt.Printf("Pub Client Topic : %s \n", msg.Topic())
-	fmt.Printf("Pub Client msg : %s \n", msg.Payload())
-}
 
 
 
