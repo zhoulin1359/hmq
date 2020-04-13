@@ -37,7 +37,6 @@ func Init() *authHTTP {
 	if err != nil {
 		log.Fatal("Read config file error: ", zap.Error(err))
 	}
-	// log.Info(string(content))
 
 	err = json.Unmarshal(content, &config)
 	if err != nil {
@@ -89,6 +88,7 @@ func (a *authHTTP) CheckConnect(clientID, username, password string) bool {
 
 	defer resp.Body.Close()
 	io.Copy(ioutil.Discard, resp.Body)
+
 	if resp.StatusCode == http.StatusOK {
 		addCache(action, clientID, username, password, "")
 		return true

@@ -118,7 +118,7 @@ func (b *Broker) Start() {
 		log.Error("broker is null")
 		return
 	}
-
+	fmt.Println(b.config)
 	if b.config.HTTPPort != "" {
 		go InitHTTPMoniter(b)
 	}
@@ -622,7 +622,7 @@ func (b *Broker) PublishMessage(packet *packets.PublishPacket) {
 func (b *Broker) BroadcastUnSubscribe(subs map[string]*subscription) {
 
 	unsub := packets.NewControlPacket(packets.Unsubscribe).(*packets.UnsubscribePacket)
-	for topic, _ := range subs {
+	for topic := range subs {
 		unsub.Topics = append(unsub.Topics, topic)
 	}
 

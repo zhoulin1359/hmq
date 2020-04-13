@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
@@ -11,7 +12,11 @@ import (
 
 func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
-	config, err := broker.ConfigureConfig(os.Args[1:])
+	conf := os.Args[1:]
+	conf = append(conf, "-config=./conf/hmq.config")
+	fmt.Println(conf)
+
+	config, err := broker.ConfigureConfig(conf)
 	if err != nil {
 		log.Fatal("configure broker config error: ", err)
 	}
@@ -20,6 +25,7 @@ func main() {
 	if err != nil {
 		log.Fatal("New Broker error: ", err)
 	}
+	//b.CheckConnectAuth()
 	b.Start()
 
 	s := waitForSignal()

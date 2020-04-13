@@ -1,0 +1,28 @@
+settings:
+  legacy:
+    force: true
+    interval: 1s
+schema:
+- name: mqtt
+  path: ./
+  commands:
+    install:
+      status: true
+      method: go build -o ./hmq
+    vet:
+      status: false
+    fmt:
+      status: true
+    run:
+      status: true
+      method: ./hmq
+  watcher:
+    extensions:
+    - go
+    paths:
+    - ./
+    ignored_paths:
+    - .git
+    - .realize
+    - vendor
+    - cmd
